@@ -11,11 +11,12 @@ class Plugin {
         return uuidv4();
     }
 
-    async insert(IdentifyID,messageData, routeKey) {
+    async insert(messageData, routeKey) {
         const insertData = {
-            message_id: IdentifyID,
+            message_id: messageData.identifyId,
             message_body: messageData,
             route_key: routeKey,
+            send_count:0,
             status: 0
         };
         const result = await this.table.insert(insertData);
