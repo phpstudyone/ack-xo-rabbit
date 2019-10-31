@@ -1,5 +1,6 @@
 {
   "name": "ack-xo-rabblit",
+  "repository":"git@github.com:phpstudyone/ack-xo-rabblit.git",
   "version": "0.0.1",
   "description": "",
   "main": "src/Plugin.js",
