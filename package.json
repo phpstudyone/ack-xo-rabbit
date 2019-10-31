@@ -1,0 +1,14 @@
+{
+  "name": "ack-xo-rabblit",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/Plugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^3.3.3"
+  }
+}
