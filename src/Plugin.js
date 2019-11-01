@@ -5,16 +5,34 @@ class Plugin {
     constructor(table,rabbit) {
         this.table = table;
         this.rabbit = rabbit;
+        this.insertTableArr = []
     }
 
-    generateIdentifyID() {
+    generateIdentifyID = () => {
         return uuidv4();
     }
 
-    async insert(messageDatas) {
-        const result = await this.table.insert(messageDatas);
+    insert = async () => {
+        const result = await this.table.insert(this.insertTableArr);
 
         return result;
+    }
+
+    formatInsertData = (messageData, routeKey) => ({
+        message_id  : messageData.identifyId,
+        message_body: messageData,
+        route_key   : routeKey,
+        send_count  : 0,
+        status      : 0,
+    })
+
+    emit = async (data,routeKey)=>{
+        const messageData = {
+            ...data,
+            identifyId: this.generateIdentifyID(),
+        };
+        this.insertTableArr.push(this.formatInsertData(messageData, routeKey));
+        await this.rabbit.emit(messageData, { routeKey: routeKey });
     }
 
 }
