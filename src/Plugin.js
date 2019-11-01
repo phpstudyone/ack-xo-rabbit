@@ -35,5 +35,11 @@ class Plugin {
         await this.rabbit.emit(messageData, { routeKey: routeKey });
     }
 
+    ack = async (messageId) => {
+        const result = await this.table.where({ message_id: messageId }).update({ status: 1 });
+
+        return result;
+    }
+
 }
 module.exports = Plugin;
