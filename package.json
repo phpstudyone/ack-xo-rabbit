@@ -1,7 +1,7 @@
 {
   "name": "ack-xo-rabbit",
   "repository":"git@github.com:phpstudyone/ack-xo-rabbit.git",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "src/Plugin.js",
   "scripts": {

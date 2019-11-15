@@ -8,25 +8,27 @@ class Plugin {
         this.insertTableArr = []
     }
 
-    generateIdentifyID = () => {
+    generateIdentifyID () {
         return uuidv4();
     }
 
-    insert = async () => {
+    async insert () {
         const result = await this.table.insert(this.insertTableArr);
 
         return result;
     }
 
-    formatInsertData = (messageData, routeKey) => ({
-        message_id  : messageData.identifyId,
-        message_body: messageData,
-        route_key   : routeKey,
-        send_count  : 0,
-        status      : 0,
-    })
+    formatInsertData(messageData, routeKey) {
+        return {
+            message_id  : messageData.identifyId,
+            message_body: messageData,
+            route_key   : routeKey,
+            send_count  : 0,
+            status      : 0,
+        }
+    }
 
-    emit = async (data,routeKey)=>{
+    async emit (data,routeKey) {
         const messageData = {
             ...data,
             identifyId: this.generateIdentifyID(),
@@ -35,8 +37,14 @@ class Plugin {
         await this.rabbit.emit(messageData, { routeKey: routeKey });
     }
 
-    ack = async (messageId) => {
+    async ack (messageId) {
         const result = await this.table.where({ message_id: messageId }).update({ status: 1 });
+
+        return result;
+    }
+
+    async reject (messageId, text) {
+        const result = await this.table.where({ message_id: messageId }).update({ reject_error: text, status: 2 });
 
         return result;
     }
