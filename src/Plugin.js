@@ -29,24 +29,36 @@ class Plugin {
     }
 
     async emit (data,routeKey) {
-        const messageData = {
-            ...data,
-            identifyId: this.generateIdentifyID(),
-        };
-        this.insertTableArr.push(this.formatInsertData(messageData, routeKey));
-        await this.rabbit.emit(messageData, { routeKey: routeKey });
+        try {
+            const messageData = {
+                ...data,
+                identifyId: this.generateIdentifyID(),
+            };
+            this.insertTableArr.push(this.formatInsertData(messageData, routeKey));
+            await this.rabbit.emit(messageData, { routeKey: routeKey });
+        } catch (error) {
+            console.log('emit error: ', error);
+        }
     }
 
     async ack (messageId) {
-        const result = await this.table.where({ message_id: messageId }).update({ status: 1 });
+        try {
+            const result = await this.table.where({ message_id: messageId }).update({ status: 1 });
 
-        return result;
+            return result;
+        } catch (error) {
+            console.log('ack error: ', error);
+        }
     }
 
     async reject (messageId, text) {
-        const result = await this.table.where({ message_id: messageId }).update({ reject_error: text, status: 2 });
+        try {
+            const result = await this.table.where({ message_id: messageId }).update({ reject_error: text, status: 2 });
 
-        return result;
+            return result;
+        } catch (error) {
+            console.log('reject error: ', error);
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 {
   "name": "ack-xo-rabbit",
-  "repository":"git@github.com:phpstudyone/ack-xo-rabbit.git",
-  "version": "0.0.6",
+  "repository": "git@github.com:phpstudyone/ack-xo-rabbit.git",
+  "version": "0.0.7",
   "description": "",
   "main": "src/Plugin.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "uuid": "^3.3.3"
+    "uuid": "^8.3.x"
   }
 }
